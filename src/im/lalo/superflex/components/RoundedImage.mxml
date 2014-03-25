@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sp:BaseContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+                  xmlns:s="library://ns.adobe.com/flex/spark"
+                  creationComplete="loadApp()"
+                  xmlns:sp="im.lalo.superflex.components.*">
+
+    <fx:Script>
+        <![CDATA[
+        [Bindable]
+        public var source:Object;
+
+        /**
+         * 加载界面
+         */
+        private function loadApp():void {
+            // load app
+        }
+        ]]>
+	</fx:Script>
+
+    <fx:Declarations>
+
+    </fx:Declarations>
+
+    <s:Ellipse width="100%" height="100%">
+        <s:fill>
+            <s:SolidColor color="0xFFFFFF"/>
+        </s:fill>
+        <s:stroke>
+            <s:SolidColorStroke color="#808080" weight="1"/>
+        </s:stroke>
+    </s:Ellipse>
+    <s:Image width="100%" height="100%" smooth="true" smoothingQuality="high"
+             source="{source}" horizontalCenter="0" verticalCenter="0" mask="{maskImage}"/>
+    <s:Group id="maskImage" width="{this.width-2}" height="{this.height-2}">
+        <s:Ellipse width="100%" height="100%">
+            <s:fill>
+                <s:SolidColor color="0xFFFFFF"/>
+            </s:fill>
+        </s:Ellipse>
+    </s:Group>
+
+</sp:BaseContainer>

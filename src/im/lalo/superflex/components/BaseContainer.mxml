@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 initialize="initApp()"
+		 creationComplete="loadApp()">
+
+	<fx:Script>
+		<![CDATA[
+        import com.lalolab.brainmvc.BrainManager;
+
+        import im.lalo.superflex.util.MemoryUtil;
+
+        import mx.collections.ArrayList;
+
+        import im.lalo.superflex.controller.RestCommand;
+        import im.lalo.superflex.model.NotifyVo;
+
+        private var notesBox:ArrayList;
+        private var notifyVo:NotifyVo;
+
+        protected var rest:RestCommand = RestCommand.getInstance();
+
+        private function initApp():void {
+            // 消息盒子
+            notesBox = new ArrayList();
+            this.addEventListener(Event.REMOVED_FROM_STAGE, removeFromStage);
+        }
+
+        private function removeFromStage(evt:Event):void {
+            // release notify
+            var notifyVo:NotifyVo;
+            for (var i:int = 0; i < notesBox.length; i++) {
+                notifyVo = notesBox.getItemAt(i) as NotifyVo;
+                BrainManager.brain.removeNotification(notifyVo.notify, notifyVo.listner);
+            }
+
+            notesBox.removeAll();
+            this.removeAllElements();
+            cleanGC();
+        }
+
+        private function loadApp():void {
+
+        }
+
+        protected function cleanGC():void {
+
+        }
+
+        protected function sendNotify(note:String, body:Object = null):void {
+            BrainManager.brain.sendNotification(note, body);
+        }
+
+        protected function addRecvNotify(notify:String, listener:Function):void {
+            // add box
+            notifyVo = new NotifyVo();
+            notifyVo.notify = notify;
+            notifyVo.listner = listener;
+            notesBox.addItem(notifyVo);
+
+            // receiveNotification
+            BrainManager.brain.receiveNotification(notify, listener);
+        }
+        ]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+
+</s:Group>

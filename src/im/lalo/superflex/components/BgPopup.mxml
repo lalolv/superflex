@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark">
+	
+	<fx:Script>
+		<![CDATA[
+			
+			[Bindable]
+			public var title:String;
+			
+			protected function btnClose_mouseOverHandler(event:MouseEvent):void
+			{
+				btnClose.filters = [glowFilter];
+			}
+			
+			protected function btnClose_mouseOutHandler(event:MouseEvent):void
+			{
+				btnClose.filters = null;
+			}
+			
+			protected function btnClose_mouseDownHandler(event:MouseEvent):void
+			{
+				btnClose.filters = null;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:Power id="powerEasing" exponent="4"/>
+		<s:GlowFilter id="glowFilter" blurX="10" blurY="10" color="#969696" 
+					  quality="2" strength="2" />
+	</fx:Declarations>
+	
+	<!-- 背景 -->
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:SolidColor color="#FCFCFC"/>
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke color="#A8A8A8" alpha="1" weight="1" />
+		</s:stroke>
+	</s:Rect>
+	
+	<s:Label text="{title}" fontSize="26" fontWeight="normal" color="#333333" left="8" top="8"/>
+	
+	<s:Label id="btnClose" text="×" fontSize="22" color="#545454" buttonMode="true" top="4" right="5"
+			 mouseOver="btnClose_mouseOverHandler(event)" 
+			 mouseOut="btnClose_mouseOutHandler(event)" 
+			 mouseDown="btnClose_mouseDownHandler(event)"/>
+	
+</s:Group>

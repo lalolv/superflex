@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 click="item_clickHandler(event)"
+		 doubleClick="item_doubleClickHandler(event)"
+		 doubleClickEnabled="true" buttonMode="true">
+	
+	<fx:Script>
+		<![CDATA[
+			private var isDoubleClick:Boolean = false;
+			private var timer:Timer;
+			
+			protected function item_clickHandler(event:MouseEvent):void
+			{
+				isDoubleClick = false;
+				
+				timer = new Timer(260, 1);
+				timer.addEventListener(TimerEvent.TIMER, clickOrDouble);
+				timer.start();
+			}
+			
+			private function clickOrDouble(evt:TimerEvent):void 
+			{
+				if(isDoubleClick)
+				{  
+					// 双击处理
+					dispatchEvent(new Event("DlbClick"));
+				}
+				else
+				{  
+					// 单击处理
+					dispatchEvent(new Event("OneClick"));
+				}
+				
+				timer.stop();
+				timer.removeEventListener(TimerEvent.TIMER, clickOrDouble);
+				timer = null;
+			}
+			
+			protected function item_doubleClickHandler(event:MouseEvent):void
+			{
+				isDoubleClick = true;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Metadata>
+		[Event(name="DlbClick", type="flash.events.Event")]
+		[Event(name="OneClick", type="flash.events.Event")]
+	</fx:Metadata>
+	
+</s:Group>

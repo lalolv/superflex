@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 width="{lbTip.width + 10}" height="{lbTip.height + 8}"
+		 visible="false" left="0" bottom="{5}">
+	
+	<fx:Script>
+		<![CDATA[
+			
+			[Bindable]
+			public var tip:String;
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:SolidColor color="#575757"/>
+		</s:fill>
+	</s:Rect>
+	<s:Label id="lbTip" text="{tip}" color="#FFF8E3" horizontalCenter="0" verticalCenter="0" />
+	
+</s:Group>

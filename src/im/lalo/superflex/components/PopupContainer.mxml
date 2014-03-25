@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sp:BaseContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				  xmlns:s="library://ns.adobe.com/flex/spark"
+				  xmlns:sp="im.lalo.superflex.components.*"
+				  implements="mx.managers.IFocusManagerContainer"
+				  creationComplete="loadApp()">
+	
+	<fx:Script>
+		<![CDATA[
+        import im.lalo.superflex.util.MemoryUtil;
+
+        import mx.core.IFlexDisplayObject;
+        import mx.managers.ISystemManager;
+        import mx.managers.PopUpManager;
+
+        public var title:String;
+        private var bg:BgPopup;
+
+        private function loadApp():void {
+            // 设置内容位置
+            if(this.numElements > 0) {
+                this.getElementAt(0).top = 40;
+                this.getElementAt(0).bottom = 10;
+                this.getElementAt(0).left = 10;
+                this.getElementAt(0).right = 10;
+            }
+
+            bg = new BgPopup();
+            bg.percentWidth = 100;
+            bg.percentHeight = 100;
+            bg.title = title;
+            this.addElementAt(bg, 0);
+
+            bg.btnClose.addEventListener(MouseEvent.CLICK, btnCloseHandler);
+        }
+
+        public function get defaultButton():IFlexDisplayObject {
+            return bg;
+        }
+
+        public function set defaultButton(value:IFlexDisplayObject):void {
+
+        }
+
+        override public function get systemManager():ISystemManager {
+            return super.systemManager;
+        }
+
+        private function btnCloseHandler(evt:MouseEvent):void {
+            close();
+        }
+
+        /**
+         * 关闭本窗口
+         */
+        public function close():void {
+            PopUpManager.removePopUp(this);
+            MemoryUtil.GC();
+        }
+        ]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<sp:filters>
+		<s:GlowFilter id="glowFilter" blurX="10" blurY="10" color="#B5B5B5" 
+					  quality="2" strength="2" />
+	</sp:filters>
+	
+</sp:BaseContainer>
