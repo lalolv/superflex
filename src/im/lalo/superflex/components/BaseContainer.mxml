@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
-		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 initialize="initApp()"
-		 creationComplete="loadApp()">
+         xmlns:s="library://ns.adobe.com/flex/spark"
+         initialize="initApp()"
+         creationComplete="loadApp()">
 
-	<fx:Script>
+    <fx:Script>
 		<![CDATA[
         import com.lalolab.brainmvc.BrainManager;
 
@@ -26,12 +26,16 @@
             this.addEventListener(Event.REMOVED_FROM_STAGE, removeFromStage);
         }
 
+        /**
+         * 从舞台中清除对象
+         * @param evt
+         */
         private function removeFromStage(evt:Event):void {
             // release notify
             var notifyVo:NotifyVo;
             for (var i:int = 0; i < notesBox.length; i++) {
                 notifyVo = notesBox.getItemAt(i) as NotifyVo;
-                BrainManager.brain.removeNotification(notifyVo.notify, notifyVo.listner);
+                BrainManager.brain.removeNotification(notifyVo.notify, notifyVo.listener);
             }
 
             notesBox.removeAll();
@@ -43,29 +47,51 @@
 
         }
 
+        /**
+         * 清洗垃圾数据
+         */
         protected function cleanGC():void {
 
         }
 
+        /**
+         * 发送消息
+         * @param note
+         * @param body
+         */
         protected function sendNotify(note:String, body:Object = null):void {
             BrainManager.brain.sendNotification(note, body);
         }
 
+        /**
+         * 添加侦听器
+         * @param notify
+         * @param listener
+         */
         protected function addRecvNotify(notify:String, listener:Function):void {
             // add box
             notifyVo = new NotifyVo();
             notifyVo.notify = notify;
-            notifyVo.listner = listener;
+            notifyVo.listener = listener;
             notesBox.addItem(notifyVo);
 
             // receiveNotification
             BrainManager.brain.receiveNotification(notify, listener);
         }
+
+        /**
+         * 删除侦听
+         * @param notify
+         * @param listener
+         */
+        protected function removeNotify(notify:String, listener:Function):void {
+            BrainManager.brain.removeNotification(notify, listener);
+        }
         ]]>
 	</fx:Script>
 
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
+    <fx:Declarations>
+        <!-- Place non-visual elements (e.g., services, value objects) here -->
+    </fx:Declarations>
 
 </s:Group>
